@@ -2,7 +2,13 @@
 
 Explore the past posts and comments of Reddit users via the Chrome Extension.
 
+## Link 
+
+https://chrome.google.com/webstore/detail/reddit-user-explorer/gophgjgjlollkjofchhmjhekpmdiaeob
+
+
 ## How to use:
+
 
 After Installation, Control & Left-Click on any Reddit username. 
 
