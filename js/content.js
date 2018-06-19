@@ -1,7 +1,7 @@
 var port = chrome.runtime.connect({name: "inject"});
 
 document.body.addEventListener("click", function(ev) {
-	console.log("clicked");
+	//console.log("clicked");
 	if (ev.ctrlKey) {
 		try {
 			var url = ev.target.href;
@@ -14,14 +14,14 @@ document.body.addEventListener("click", function(ev) {
 					user: user
 				}
 				
-				console.log("user is : ", user);
-				console.log("inject:", url);
+				//console.log("user is : ", user);
+				//console.log("inject:", url);
 				port.postMessage({type: inj});	
 				
 			}
 			ev.preventDefault();
 		}catch (ev){
-			console.log(ev);
+			//console.log(ev);
 		}
 	}
 });
