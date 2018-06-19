@@ -1,6 +1,6 @@
 # Reddit User Explorer
 
-Explore the past posts and ocmments of Reddit users.
+Explore the past posts and comments of Reddit users.
 
 How to use:
 
