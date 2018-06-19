@@ -17,3 +17,10 @@ Reddit API recommends that a request should be done once every second. We respec
 multiple posts/comments are fetched in batches of 100 which is the maximum that can be fetched per request.
 
 Additionally, Reddit API returns at most the last 1000 posts and 1000 comments per user.
+
+##Donate 
+
+If you like this Extension and you would like more features, feel free to send your suggestions.
+
+######  XLM Donations: GA7TG5Z7NI2646AQPEEX5EJQXXPKVUFJDK2Q7DDNFAYP6Y2LWS7DHWFM
+
