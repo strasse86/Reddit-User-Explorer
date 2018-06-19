@@ -8,5 +8,12 @@ After Installation, Control & Left-Click on any Reddit username.
 
 Once the past posts and comments are fetched, they will be displayed in a new Chrome Tab.
 
-## Screenshots
+## Screenshots:
 ![Alt text](/preview.png?raw=true "Results for Specific User")
+
+## Limitations
+
+Reddit API recommends that a request should be done once every second. We respect this limit therefore users with 
+multiple posts/comments are fetched in batches of 100 which is the maximum that can be fetched per request.
+
+Additionally, Reddit API returns at most the last 1000 posts and 1000 comments per user.
