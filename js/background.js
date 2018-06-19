@@ -122,7 +122,7 @@ function send_message(inf,user){
 		trigger_when_two = 0
 		/* Here we create a tab where we are going to display the  results */
 		chrome.tabs.create({url: chrome.runtime.getURL("html/show.html")}, function(t){
-			console.log("[show.js] chrome.tabs.create",t);
+			//console.log("[show.js] chrome.tabs.create",t);
 		});
 		/* Here we wait until the new tab is alive and sends us a message so that we can reply*/
 		chrome.runtime.onConnect.addListener(function(port) {
