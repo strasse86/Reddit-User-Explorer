@@ -11,7 +11,7 @@ Once the past posts and comments are fetched, they will be displayed in a new Ch
 ## Screenshots:
 ![Alt text](/preview.png?raw=true "Results for Specific User")
 
-## Limitations
+## Limitations:
 
 Reddit API recommends that a request should be done once every second. We respect this limit therefore users with 
 multiple posts/comments are fetched in batches of 100 which is the maximum that can be fetched per request.
