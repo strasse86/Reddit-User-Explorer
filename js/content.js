@@ -13,12 +13,10 @@ document.body.addEventListener("click", function(ev) {
 					url : url,
 					user: user
 				}
-				
 				//console.log("user is : ", user);
 				//console.log("inject:", url);
 				port.postMessage({type: inj});	
-				
-			}
+				}
 			ev.preventDefault();
 		}catch (ev){
 			//console.log(ev);
