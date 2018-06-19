@@ -1,0 +1,33 @@
+  {
+    "name": "Reddit User Explorer",
+    "version": "0.1",
+    "description": "Find Posts and Comments distrubution of Reddit Users",
+	"options_ui": {
+		"page"        : "html/options.html",
+		"open_in_tab" : false },
+	"content_scripts": [
+    {
+	  "matches": ["https://*.reddit.com/*"],
+      "all_frames": false,
+      "js": ["js/jquery.js","js/content.js"]
+    }
+  ],"background": {
+      "scripts": ["js/background.js"],
+      "persistent": false
+    },
+	"permissions" :   ["declarativeContent"],
+	"page_action" :
+	{
+		"default_icon": 
+	{                   
+            "16" : "images/icon16.png",
+			"24" : "images/icon24.png",
+			"32" : "images/icon32.png",
+			"48" : "images/icon48.png",
+			"128": "images/128.png"
+    },
+		 "default_title": "Reddit User Explorer",
+		 "default_popup": "html/popup.html"
+	}, 
+    "manifest_version": 2
+  }
