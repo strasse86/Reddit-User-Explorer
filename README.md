@@ -140,12 +140,12 @@ If this url contains the string "/user" like https://www.reddit.com/user/strasse
 comments and posts.
 
 Now to continue the breakdown of the manifest.json let's move to the next part.
-
+```
 "background": {
       "scripts": ["js/background.js"],
       "persistent": false
     },
-	
+```
 This is where the bulk of the work is done. Here for the specific user we request reddit to fetch his comments and posts. Reddit can return at maximum 1000 posts and 1000 comments.
 If a user has more than those only the most recent onces will be returned.
 
