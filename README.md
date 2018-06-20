@@ -77,7 +77,7 @@ Here is the current [manifest.json](https://github.com/strasse86/Reddit-User-Exp
   }
 
 ```
-**name** **version** and **descriptio** are self explanatory.
+**name**, **version** and **description** are self explanatory.
 
 ```
 "options_ui": {
@@ -88,3 +88,53 @@ Here we define the [options.html](https://github.com/strasse86/Reddit-User-Explo
 **open_in_tab** is a boolean that is set to false, meaning that the options page will not open in a new tab but in a pop up like below:
 
 ![Options Screenshot](https://github.com/strasse86/Reddit-User-Explorer/blob/master/screenshots/options.png)
+
+
+```
+"content_scripts": [
+    {
+	  "matches": ["https://*.reddit.com/*"],
+      "all_frames": false,
+      "js": ["js/jquery.js","js/content.js"]
+    }
+```
+
+Here we define the pages where the content scripts will run. Content scripts are running in the contect of the webpage that is defined under **matches**.
+If the user visits for example https://www.reddit.com/r/all the content scripts **jquery.js** and **content.js** will run in the context of it.
+
+That means that we can listen on events that are happening under the matched urls.  Let's see what **content.js** contains.
+
+
+
+```javascript
+var port = chrome.runtime.connect({name: "inject"});
+
+document.body.addEventListener("click", function(ev) {
+	//console.log("clicked");
+	if (ev.ctrlKey) {
+		try {
+			var url = ev.target.href;
+			if ( url.includes("/user") &&  url.includes != undefined && url.includes != 0 ){
+				var n = url.match(new RegExp("user/" + "(.*)" +'' ));
+				var user = n[1];
+				
+				var inj = {
+					url : url,
+					user: user
+				}
+				port.postMessage({type: inj});	
+				}
+			ev.preventDefault();
+		}
+			catch (ev){
+		}
+	}
+});
+```
+
+First we create a port that will be used to communicate to other parts of the extension ( the background pages which are doing the bulk of the work). This is done because there is no other way
+to communicate between the injected page and the background of our extension. It is a safety measure taken by default.
+
+Then we add a Listener on the body which listens when a user is pressing the Ctrl Key. Once this is pressed the script is taking the url that is under the mouse.
+If this url contains the string "/user" like https://www.reddit.com/user/strasse86 it posts it to the background script which is then going to request all the user's past
+comments and posts.
