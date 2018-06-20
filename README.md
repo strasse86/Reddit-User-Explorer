@@ -40,7 +40,7 @@ The extension is broken into several files, let's see the most important of them
 
 The manifest is the only file a chrome extension must have and it should be named **manifest.json**
 
-Here is the current manifest.json 
+Here is the current [manifest.json](https://github.com/strasse86/Reddit-User-Explorer/blob/master/manifest.json) 
 
 ```
   {
@@ -77,6 +77,14 @@ Here is the current manifest.json
   }
 
 ```
+**name** **version** and **descriptio** are self explanatory.
 
+```
+"options_ui": {
+		"page"        : "html/options.html",
+		"open_in_tab" : false },
+```
+Here we define the [options.html](https://github.com/strasse86/Reddit-User-Explorer/blob/master/html/options.html) page of the extension. This is where the end user can select options, if they are defined by the extension.
+**open_in_tab** is a boolean that is set to false, meaning that the options page will not open in a new tab but in a pop up like below:
 
 
