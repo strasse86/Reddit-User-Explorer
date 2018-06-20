@@ -87,4 +87,4 @@ Here is the current [manifest.json](https://github.com/strasse86/Reddit-User-Exp
 Here we define the [options.html](https://github.com/strasse86/Reddit-User-Explorer/blob/master/html/options.html) page of the extension. This is where the end user can select options, if they are defined by the extension.
 **open_in_tab** is a boolean that is set to false, meaning that the options page will not open in a new tab but in a pop up like below:
 
-
+![Options Screenshot](https://github.com/strasse86/Reddit-User-Explorer/blob/master/screenshots/options.png)
