@@ -24,10 +24,8 @@ chrome.runtime.onConnect.addListener(function(port) {
     //console.log("[background.js] -> Listening on: ",port);	
 	port.onMessage.addListener(function(type,sendingPort) {		
 		if (typeof type.type != 'undefined' ) {
-			
 			var total_comments = {};
-			var total_posts    = {};
-							
+			var total_posts    = {};		
 			//console.log("[background.js] -> type,port,PORT_ID: ", type.type.url,port,sendingPort.sender.tab.id);
 			get_all_urls(type.type.url + "/comments.json?limit=100",total_comments,type.type.user,"comments");
 			get_all_urls(type.type.url + "/submitted.json?limit=100",total_posts,type.type.user,"submitted");	

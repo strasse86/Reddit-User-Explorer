@@ -138,3 +138,96 @@ to communicate between the injected page and the background of our extension. It
 Then we add a Listener on the body which listens when a user is pressing the Ctrl Key. Once this is pressed the script is taking the url that is under the mouse.
 If this url contains the string "/user" like https://www.reddit.com/user/strasse86 it posts it to the background script which is then going to request all the user's past
 comments and posts.
+
+Now to continue the breakdown of the manifest.json let's move to the next part.
+
+"background": {
+      "scripts": ["js/background.js"],
+      "persistent": false
+    },
+	
+This is where the bulk of the work is done. Here for the specific user we request reddit to fetch his comments and posts. Reddit can return at maximum 1000 posts and 1000 comments.
+If a user has more than those only the most recent onces will be returned.
+
+Let's see some key functions of background.js
+
+
+
+```javascript
+chrome.runtime.onConnect.addListener(function(port) {
+    //console.log("[background.js] -> Listening on: ",port);	
+	port.onMessage.addListener(function(type,sendingPort) {		
+		if (typeof type.type != 'undefined' ) {
+			var total_comments = {};
+			var total_posts    = {};		
+			//console.log("[background.js] -> type,port,PORT_ID: ", type.type.url,port,sendingPort.sender.tab.id);
+			get_all_urls(type.type.url + "/comments.json?limit=100",total_comments,type.type.user,"comments");
+			get_all_urls(type.type.url + "/submitted.json?limit=100",total_posts,type.type.user,"submitted");	
+		}
+	});	
+});	
+```
+
+Here is when we wait for the content script to deliver us the username that we want to search. We create two objects **total_comments** and **total_posts** which
+will later contain the subreddits the user has posted.
+
+then we call the function **get_all_urls** in order to get all comments and posts.
+
+
+```javascript
+function get_all_urls(full_name,comments_or_posts,user,trigger) {
+		var myVar = window.setTimeout(() => { 
+				get_url(full_name,comments_or_posts,user,trigger)
+				.then((counter) => {
+					var next = counter["next"];
+					if ( next == null) 	{
+						clearTimeout(myVar);
+						return;
+					}
+					get_all_urls(full_name + "&after=" +next ,comments_or_posts,user,trigger);
+				})
+		}, 2000);
+}
+```
+
+Reddit recommends that we make 1 request every second in order to not spam their servers. The extension respects this limit making in average 1 request / second.
+Every request can fetch at most 100 results, that means that users which have a large amount of posts and comments will take more time to generate.
+
+Once we have populated the  **total_comments** and **total_posts** we sort them by descending order, so that the subreddits with the most comments/post are displayed first.
+
+After the sorting is done we present the results in a new tab, using the echarts.js library.
+
+```javascript
+try {
+			trigger_when_two = 0
+			/* Here we create a tab where we are going to display the  results */
+			chrome.tabs.create({url: chrome.runtime.getURL("html/show.html")}, function(t){
+				//console.log("[show.js] chrome.tabs.create",t);
+			});
+```
+
+Now continuing with the manifest json.
+
+```
+"permissions" :   ["declarativeContent"],
+	"page_action" :
+	{
+		"default_icon": 
+	{                   
+            "16" : "images/icon16.png",
+			"24" : "images/icon24.png",
+			"32" : "images/icon32.png",
+			"48" : "images/icon48.png",
+			"128": "icon_128.png"
+    },
+		 "default_title": "Reddit User Explorer"
+	}, 
+    "manifest_version": 2
+  }
+ ```
+ 
+ The extension requires the **declarativeContent** permission since it includes the extension icon which is  highlighted only when the user 
+ is on reddit. On all other sites it is grayed out.
+ 
+ The rest are self explanatory, we just define some display icons in different sizes and the manifest_version which according to chrome extension documentation should be set to 2.
+ 
