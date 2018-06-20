@@ -4,8 +4,6 @@ var _1;
 var _2;
 var trigger_when_two = 0;
 
-
-// When the extension is installed or upgraded ...
 chrome.runtime.onInstalled.addListener(function() {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([
@@ -54,7 +52,6 @@ function get_all_urls(full_name,comments_or_posts,user,trigger) {
 function get_url(posts,comments_or_posts,user,trigger){
 	
 	return new Promise(function(resolve,reject){
-	  //console.log("INSIDE GET_URL");
 	  var counter = {};
 	  fetch(posts).then(function(response) {
 		return response.json();
@@ -81,7 +78,6 @@ function get_url(posts,comments_or_posts,user,trigger){
 			resolve(info);
 	  }).
 	  catch(function(err) {
-		//console.log(err);
 		reject(err);
 		});
 	});	
@@ -89,7 +85,6 @@ function get_url(posts,comments_or_posts,user,trigger){
 
 function filter_posts(comments,user){
 	var sorted_comments = sortByCount(comments);
-	//console.log("[show.js] sorted posts",sorted_comments); 
 	_1 = sorted_comments;
 	trigger_when_two++;
 	if ( trigger_when_two == 2 ) {
@@ -104,7 +99,6 @@ function filter_posts(comments,user){
 
 function filter_comments(comments,user){
 	var sorted_comments = sortByCount(comments);
-	//console.log("[show.js] sorted comments",sorted_comments); 
 	_2 = sorted_comments;
 	trigger_when_two++;
 	if ( trigger_when_two == 2 ) {
@@ -118,22 +112,24 @@ function filter_comments(comments,user){
 }
 
 function send_message(inf,user){
-	try {
-		trigger_when_two = 0
-		/* Here we create a tab where we are going to display the  results */
-		chrome.tabs.create({url: chrome.runtime.getURL("html/show.html")}, function(t){
-			//console.log("[show.js] chrome.tabs.create",t);
-		});
-		/* Here we wait until the new tab is alive and sends us a message so that we can reply*/
-		chrome.runtime.onConnect.addListener(function(port) {
-			port.onMessage.addListener(function(msg) {
-				if (msg.joke == "Knock knock")
-				  port.postMessage({sorted: inf});
-				 
-			  });
-			});	
+	if (trigger_when_two == 2){
+		trigger_when_two = 0;
+		try {
+			trigger_when_two = 0
+			/* Here we create a tab where we are going to display the  results */
+			chrome.tabs.create({url: chrome.runtime.getURL("html/show.html")}, function(t){
+				//console.log("[show.js] chrome.tabs.create",t);
+			});
+			/* Here we wait until the new tab is alive and sends us a message so that we can reply*/
+			chrome.runtime.onConnect.addListener(function(port) {
+				port.onMessage.addListener(function(msg) {
+					if (msg.joke == "Knock knock")
+					  port.postMessage({sorted: inf});
+				  });
+				});	
+			}
+		catch (er){ console.log(er);}
 		}
-	catch (er){ console.log(er);}
 }
 
 function sortByCount (wordsMap) {

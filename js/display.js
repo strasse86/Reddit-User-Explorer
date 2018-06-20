@@ -64,7 +64,7 @@ option = {
             data : dataAxis,
 			labelAngle: -60,
 			axisLabel :{
-				rotate:30,
+				rotate:60,
 			},
             axisTick: {
                 alignWithLabel: true
