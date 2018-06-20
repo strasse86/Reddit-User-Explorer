@@ -24,7 +24,7 @@
 			"24" : "images/icon24.png",
 			"32" : "images/icon32.png",
 			"48" : "images/icon48.png",
-			"128": "images/128.png"
+			"128": "icon_128.png"
     },
 		 "default_title": "Reddit User Explorer"
 	}, 
