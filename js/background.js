@@ -2,23 +2,40 @@
 
 var _1;
 var _2;
+var clicked = 0;
+var flash;
 var trigger_when_two = 0;
+var is_now_flashing = 0;
+var search_in_progress = 0;
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { urlContains: 'reddit.com' },
-          })
-        ],
-        actions: [ new chrome.declarativeContent.ShowPageAction() ]
-      }
-    ]);
-  });
-});
 
+
+function start_flashing(){
+	flash = setInterval(flash_during_search,1500);
+}
+
+
+function stop_flashing(){
+	clearInterval(flash);
+	chrome.browserAction.setBadgeText({text: ""});
+	chrome.browserAction.setBadgeBackgroundColor({color: "white"});
+	
+}
+
+function flash_during_search(){
+
+	  if (!clicked){
+		clicked = 1;
+		chrome.browserAction.setBadgeText({text: "."});
+		chrome.browserAction.setBadgeBackgroundColor({color: "green"});
+	  }
+	  else if (clicked) {
+		  clicked = 0;
+		  chrome.browserAction.setBadgeText({text: ".."});
+		  chrome.browserAction.setBadgeBackgroundColor({color: "green"});
+	  }
+	
+}
 
 chrome.runtime.onConnect.addListener(function(port) {
     //console.log("[background.js] -> Listening on: ",port);	
@@ -27,8 +44,16 @@ chrome.runtime.onConnect.addListener(function(port) {
 			var total_comments = {};
 			var total_posts    = {};		
 			//console.log("[background.js] -> type,port,PORT_ID: ", type.type.url,port,sendingPort.sender.tab.id);
-			get_all_urls(type.type.url + "/comments.json?limit=100",total_comments,type.type.user,"comments");
-			get_all_urls(type.type.url + "/submitted.json?limit=100",total_posts,type.type.user,"submitted");	
+			
+			if ( search_in_progress == 0 ){
+				search_in_progress = 1;
+				start_flashing();
+				get_all_urls(type.type.url + "/comments.json?limit=100",total_comments,type.type.user,"comments");
+				get_all_urls(type.type.url + "/submitted.json?limit=100",total_posts,type.type.user,"submitted");	
+			}
+			else if( search_in_progress == 1) {
+				alert("Please wait until the current search is done.");
+			}
 		}
 	});	
 });	
@@ -112,6 +137,8 @@ function filter_comments(comments,user){
 function send_message(inf,user){
 	if (trigger_when_two == 2){
 		trigger_when_two = 0;
+		search_in_progress = 0;
+		stop_flashing();
 		try {
 			trigger_when_two = 0
 			/* Here we create a tab where we are going to display the  results */
