@@ -43,9 +43,9 @@ The manifest is the only file a chrome extension must have and it should be name
 Here is the current [manifest.json](https://github.com/strasse86/Reddit-User-Explorer/blob/master/manifest.json) 
 
 ```
-  {
+   {
     "name": "Reddit User Explorer",
-    "version": "0.2", 
+    "version": "0.2",
     "description": "Find Posts and Comments distrubution of Reddit Users",
 	"options_ui": {
 		"page"        : "html/options.html",
@@ -60,19 +60,21 @@ Here is the current [manifest.json](https://github.com/strasse86/Reddit-User-Exp
       "scripts": ["js/background.js"],
       "persistent": false
     },
-	"permissions" :   ["declarativeContent"],
-	"page_action" :
+	"browser_action" :
 	{
 		"default_icon": 
 	{                   
             "16" : "images/icon16.png",
 			"24" : "images/icon24.png",
 			"32" : "images/icon32.png",
-			"48" : "images/icon48.png",
-			"128": "icon_128.png"
+			"128": "images/icon_128.png"
     },
 		 "default_title": "Reddit User Explorer"
 	}, 
+	"icons" : {
+		"48" : "images/icon48.png",
+		"128": "images/icon_128.png"
+	},
     "manifest_version": 2
   }
 
@@ -209,25 +211,24 @@ try {
 Now continuing with the manifest json.
 
 ```
-"permissions" :   ["declarativeContent"],
-	"page_action" :
+"browser_action" :
 	{
 		"default_icon": 
 	{                   
             "16" : "images/icon16.png",
 			"24" : "images/icon24.png",
 			"32" : "images/icon32.png",
-			"48" : "images/icon48.png",
-			"128": "icon_128.png"
+			"128": "images/icon_128.png"
     },
 		 "default_title": "Reddit User Explorer"
 	}, 
-    "manifest_version": 2
-  }
+	"icons" : {
+		"48" : "images/icon48.png",
+		"128": "images/icon_128.png"
+	},
  ```
  
- The extension requires the **declarativeContent** permission since it includes the extension icon which is  highlighted only when the user 
- is on reddit. On all other sites it is grayed out.
+[Some icon definitions](https://developer.chrome.com/apps/manifest/icons)
  
- The rest are self explanatory, we just define some display icons in different sizes and the manifest_version which according to chrome extension documentation should be set to 2.
- 
+Under default_icon in browser_action we are displaying the icons that the user sees on the top right side of the browser.
+Under icons we see the icons that the user sees when he is browsing his extensions on chrome  
