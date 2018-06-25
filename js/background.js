@@ -1,13 +1,13 @@
 'use strict'
 
-var _1;
-var _2;
+
+var global_comments_array;
+var global_posts_array;
 var clicked = 0;
 var flash;
 var trigger_when_two = 0;
 var is_now_flashing = 0;
 var search_in_progress = 0;
-
 
 
 function start_flashing(){
@@ -94,9 +94,9 @@ function get_url(posts,comments_or_posts,user,trigger){
 						"counter" : counter
 			}
 			if ( next == null && trigger == "comments" ) 
-				_1 = filter_comments(comments_or_posts,user);
+				global_comments_array = filter_comments(comments_or_posts,user);
 			if ( next == null && trigger == "submitted")
-				_2 = filter_posts(comments_or_posts,user);
+				global_posts_array = filter_posts(comments_or_posts,user);
 			
 			resolve(info);
 	  }).
@@ -108,12 +108,12 @@ function get_url(posts,comments_or_posts,user,trigger){
 
 function filter_posts(comments,user){
 	var sorted_comments = sortByCount(comments);
-	_1 = sorted_comments;
+	global_comments_array = sorted_comments;
 	trigger_when_two++;
 	if ( trigger_when_two == 2 ) {
 		var inf = {
-		com : _1,
-		pos : _2,
+		com : global_comments_array,
+		pos : global_posts_array,
 		user: user
 		}
 	send_message(inf,user);
@@ -122,12 +122,12 @@ function filter_posts(comments,user){
 
 function filter_comments(comments,user){
 	var sorted_comments = sortByCount(comments);
-	_2 = sorted_comments;
+	global_posts_array = sorted_comments;
 	trigger_when_two++;
 	if ( trigger_when_two == 2 ) {
 		var inf = {
-		com : _1,
-		pos : _2,
+		com : global_comments_array,
+		pos : global_posts_array,
 		user: user
 		}
 	send_message(inf,user);
