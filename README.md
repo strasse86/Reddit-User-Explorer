@@ -2,7 +2,7 @@
 
 Explore the past posts and comments of Reddit users via the Chrome Extension.
 
-## Link 
+## Link:
 
 https://chrome.google.com/webstore/detail/reddit-user-explorer/gophgjgjlollkjofchhmjhekpmdiaeob
 
@@ -15,7 +15,7 @@ After Installation, Control & Left-Click on any Reddit username.
 Once the past posts and comments are fetched, they will be displayed in a new Chrome Tab.
 
 
-## Demo
+## Demo:
 ![Demonstration](screenshots/demo.gif)
 
 ## Screenshots:
@@ -28,7 +28,7 @@ multiple posts/comments are fetched in batches of 100 which is the maximum that 
 
 Additionally, Reddit API returns at most the last 1000 posts and 1000 comments per user.
 
-## Donate 
+## Donate:
 
 If you like this Extension and you would like more features, feel free to send your suggestions.
 
@@ -36,7 +36,7 @@ If you like this Extension and you would like more features, feel free to send y
 ######  BTC Donations: 12PDrPtoEvWHTxJDZT1CZq1pozrzevR5cq
 
 
-## Code breakdown
+## Code breakdown:
 
 The extension is broken into several files, let's see the most important of them
 
