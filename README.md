@@ -32,7 +32,7 @@ Additionally, Reddit API returns at most the last 1000 posts and 1000 comments p
 
 If you like this Extension and you would like more features, feel free to send your suggestions.
 
-######  BTC Donations: 12PDrPtoEvWHTxJDZT1CZq1pozrzevR5cq
+######  BTC Donations: bc1qpjdsx8ddj7c7607ezrnfavsdr6zzeexjxfqcte
 
 ## Code breakdown:
 
